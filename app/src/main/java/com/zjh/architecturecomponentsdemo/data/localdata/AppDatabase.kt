@@ -4,20 +4,20 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import com.zjh.architecturecomponentsdemo.data.enitity.Image
-import com.zjh.architecturecomponentsdemo.data.localdata.dao.ImageDao
+import com.zjh.architecturecomponentsdemo.data.localdata.dao.NetworkCacheDao
+import com.zjh.architecturecomponentsdemo.data.localdata.dao.entity.NetworkCacheEntity
 
 /**
  * @author zjh
  * 2017/8/9
  */
 @Database(
-        entities = arrayOf(Image::class),
+        entities = arrayOf(NetworkCacheEntity::class),
         version = 1,
         exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun imageDao(): ImageDao
+    abstract fun networkCacheDao(): NetworkCacheDao
 
     companion object {
         private const val DB_NAME = "bc_im.appDatabase"

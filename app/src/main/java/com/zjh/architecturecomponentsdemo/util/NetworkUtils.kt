@@ -14,8 +14,11 @@ object NetworkUtils{
      * check network is enable
      */
     fun isNetworkConnected():Boolean{
-        val connectivityManager: ConnectivityManager = MyApplication.instance?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo:NetworkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo.isAvailable
+        val connectivityManager: ConnectivityManager = MyApplication.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+        if (networkInfo != null){
+            return networkInfo.isAvailable
+        }
+        return false
     }
 }

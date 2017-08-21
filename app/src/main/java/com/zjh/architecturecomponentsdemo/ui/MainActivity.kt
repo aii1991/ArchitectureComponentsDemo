@@ -13,14 +13,15 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.zjh.architecturecomponentsdemo.R
-import com.zjh.architecturecomponentsdemo.data.enitity.Image
+import com.zjh.architecturecomponentsdemo.data.bean.ImageBean
 import com.zjh.architecturecomponentsdemo.data.remotedata.req.PagingParam
+import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     private lateinit var mImageViewModel:ImageViewModel
-    private lateinit var mAdapter: BaseQuickAdapter<Image,BaseViewHolder>
+    private lateinit var mAdapter: BaseQuickAdapter<ImageBean,BaseViewHolder>
     private val mParam: PagingParam = PagingParam.createParam()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +33,8 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
 
     fun initView(){
         mRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-        mAdapter = object: BaseQuickAdapter<Image,BaseViewHolder>(R.layout.main_item){
-            override fun convert(helper: BaseViewHolder?, item: Image?) {
+        mAdapter = object: BaseQuickAdapter<ImageBean,BaseViewHolder>(R.layout.main_item){
+            override fun convert(helper: BaseViewHolder?, item: ImageBean?) {
                 Glide.with(this@MainActivity)
                         .load(item?.url)
                         .into(helper?.getView<ImageView>(R.id.iv))
@@ -49,15 +50,14 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
         mSwipeRefreshLayout.isRefreshing = true
 
         mImageViewModel = ViewModelProviders.of(this).get(ImageViewModel::class.java)
-        mImageViewModel.mImageLiveData.value = mAdapter.data
-        mImageViewModel.mImageLiveData.observe(this, Observer {
+        mImageViewModel.mImageBeanListLiveData.value = mAdapter.data
+        mImageViewModel.mImageBeanListLiveData.observe(this, Observer {
             if (mSwipeRefreshLayout.isRefreshing){
                 mSwipeRefreshLayout.isRefreshing = false
             }
 
             if (it != null){
-                mAdapter.addData(it as List<Image>)
-                mAdapter.loadMoreComplete()
+                mAdapter.addData(it as List<ImageBean>)
                 if (it.size < mParam.pageSize){
                     mAdapter.loadMoreEnd()
                 }
@@ -78,6 +78,8 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
         mImageViewModel.loadData(mParam, Consumer {
             mParam.currentPage --
             mAdapter.loadMoreFail()
+        },Action {
+            mAdapter.loadMoreComplete()
         })
     }
 

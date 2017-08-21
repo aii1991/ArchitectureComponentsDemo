@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.zjh.architecturecomponentsdemo.MyApplication
 import com.zjh.architecturecomponentsdemo.data.ImageRepository
-import com.zjh.architecturecomponentsdemo.data.enitity.Image
+import com.zjh.architecturecomponentsdemo.data.bean.ImageBean
 import com.zjh.architecturecomponentsdemo.data.remotedata.req.PagingParam
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
@@ -19,18 +19,18 @@ class ImageViewModel(application: Application) : AndroidViewModel(application){
     @Inject
     lateinit var mImageRepository:ImageRepository
 
-    val mImageLiveData:MutableLiveData<MutableList<Image>> = MutableLiveData()
+    val mImageBeanListLiveData:MutableLiveData<MutableList<ImageBean>> = MutableLiveData()
 
     init {
         (application as MyApplication).appComponent.inject(this)
     }
 
-    fun loadData(param: PagingParam,onError: Consumer<in Throwable>){
+    fun loadData(param: PagingParam,onError: Consumer<in Throwable>,onComplete:Action = Action {  }){
         mImageRepository.getDatas(param, Consumer {
             if (it.isNotEmpty()){
-                mImageLiveData.value = it.toMutableList()
+                mImageBeanListLiveData.value = it.toMutableList()
             }
-        },onError)
+        },onError,onComplete)
     }
 
     override fun onCleared() {

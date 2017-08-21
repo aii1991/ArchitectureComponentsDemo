@@ -1,6 +1,6 @@
 package com.zjh.architecturecomponentsdemo.data.remotedata.service
 
-import com.zjh.architecturecomponentsdemo.data.enitity.Image
+import com.zjh.architecturecomponentsdemo.data.bean.ImageBean
 import com.zjh.architecturecomponentsdemo.data.remotedata.api.ImageApi
 import com.zjh.architecturecomponentsdemo.data.remotedata.req.PagingParam
 import com.zjh.architecturecomponentsdemo.network.RetrofitManager
@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
  * 2017/8/21
  */
 object ImageWebService {
-    fun getImages(param:PagingParam,onSuccess: Consumer<in List<Image>>, onError:Consumer<in Throwable>, onComplete: Action= Action {  }): Disposable{
+    fun getImages(param:PagingParam, onSuccess: Consumer<in List<ImageBean>>, onError:Consumer<in Throwable>, onComplete: Action= Action {  }): Disposable{
         return RetrofitManager
                 .instance
                 .createReq(ImageApi::class.java)
