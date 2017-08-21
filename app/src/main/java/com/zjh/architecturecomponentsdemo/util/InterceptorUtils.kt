@@ -1,15 +1,13 @@
-package com.zjh.architecturecomponentsdemo.utils
+package com.zjh.architecturecomponentsdemo.util
 
 
 import java.io.IOException
 import java.nio.charset.Charset
 
-import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okio.Buffer
-import okio.BufferedSource
 
 /**
  * @author zjh
@@ -30,9 +28,7 @@ object InterceptorUtils {
             if (contentType != null) {
                 charset = contentType.charset(UTF8)
             }
-            if (contentLength == 0L) {
-                rspData = buffer.clone().readString(charset)
-            }
+            rspData = buffer.clone().readString(charset)
         } catch (e: Exception) {
             e.printStackTrace()
         }

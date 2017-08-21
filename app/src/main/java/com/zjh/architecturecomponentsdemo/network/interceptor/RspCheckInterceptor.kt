@@ -1,7 +1,7 @@
 package com.zjh.architecturecomponentsdemo.network.interceptor
 
 
-import com.zjh.architecturecomponentsdemo.utils.InterceptorUtils
+import com.zjh.architecturecomponentsdemo.util.InterceptorUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.json.JSONException
@@ -20,9 +20,9 @@ class RspCheckInterceptor : Interceptor {
         try {
             val rspBody = response.body()
             val jsonObject = JSONObject(InterceptorUtils.getRspData(rspBody))
-            val status = jsonObject.getInt("status")
-            if (status < 200 || status >= 300) {
-                throw IOException(jsonObject.getString("msg"))
+            val error = jsonObject.getBoolean("error")
+            if (error) {
+                throw IOException("error")
             }
         } catch (e: JSONException) {
             e.printStackTrace()

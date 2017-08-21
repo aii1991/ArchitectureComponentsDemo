@@ -16,5 +16,8 @@ interface ImageDao{
     fun getAllImages(): Flowable<List<Image>>
 
     @Insert
-    fun insertImages(vararg image: Image)
+    fun insertImage(vararg image: Image)
+
+    @Insert
+    fun insertImages(image: List<Image>)
 }

@@ -1,6 +1,8 @@
 package com.boildcoffee.imboildcoffee.data
 
-import io.reactivex.Flowable
+import com.zjh.architecturecomponentsdemo.data.remotedata.req.PagingParam
+import io.reactivex.functions.Action
+import io.reactivex.functions.Consumer
 
 /**
  * @author zjh
@@ -9,21 +11,18 @@ import io.reactivex.Flowable
 interface IRepository<T>{
     /**
      * get data from repository
-     *
-     * @return data from repository
      */
-    fun getData(dataId: Long): Flowable<T>
+    fun getData(dataId: Long)
 
     /**
      * get all data from repository
      */
-    fun getDatas(): Flowable<List<T>>
+    fun getDatas(param: PagingParam,onSuccess: Consumer<List<T>>,onError: Consumer<in Throwable> = Consumer {  },onComplete: Action = Action {  })
 
     /**
      *  insertData to repository
-     *  @return insert data
      */
-    fun insertData(vararg data: T): List<T>
+    fun insertData(vararg data: T)
 
     /**
      *  from repository delete data
@@ -34,4 +33,6 @@ interface IRepository<T>{
      *  from repository clear all data
      */
     fun deleteDatas()
+
+    fun destroy()
 }

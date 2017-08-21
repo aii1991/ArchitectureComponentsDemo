@@ -1,6 +1,5 @@
 package com.zjh.architecturecomponentsdemo.data
 
-import com.zjh.architecturecomponentsdemo.data.localdata.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,5 +12,5 @@ import javax.inject.Singleton
 class RepositoryModule{
     @Singleton
     @Provides
-    fun provideImageRepository(appDatabase: AppDatabase) = ImageRepository(appDatabase)
+    fun provideImageRepository() = ImageRepository()
 }
