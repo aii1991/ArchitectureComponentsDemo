@@ -28,7 +28,7 @@ class ImageViewModel(application: Application) : AndroidViewModel(application){
     fun loadData(param: PagingParam,onError: Consumer<in Throwable>,onComplete:Action = Action {  }){
         mImageRepository.getDatas(param, Consumer {
             if (it.isNotEmpty()){
-                mImageBeanListLiveData.value = it.toMutableList()
+                mImageBeanListLiveData.value = it.toMutableList() //通知数据发送改变
             }
         },onError,onComplete)
     }
