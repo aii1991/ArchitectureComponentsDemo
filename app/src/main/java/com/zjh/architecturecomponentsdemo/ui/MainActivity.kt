@@ -61,6 +61,7 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
                 if (it.size < mParam.pageSize){
                     mAdapter.loadMoreEnd()
                 }
+                mAdapter.loadMoreComplete()
             }else{
                 mAdapter.loadMoreFail()
             }

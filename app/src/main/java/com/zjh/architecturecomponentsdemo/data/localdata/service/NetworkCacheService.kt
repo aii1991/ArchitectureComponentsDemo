@@ -1,5 +1,6 @@
 package com.zjh.architecturecomponentsdemo.data.localdata.service
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.zjh.architecturecomponentsdemo.MyApplication
@@ -26,7 +27,7 @@ object NetworkCacheService {
                 .subscribe(onComplete,onError)
     }
 
-    fun getData(id: String, onSuccess: Consumer<in List<ImageBean>>, onError: Consumer<in Throwable>): Disposable{
+    fun getData(id: Int, onSuccess: Consumer<in List<ImageBean>>, onError: Consumer<in Throwable>): Disposable{
          return MyApplication.instance.appDatabase.networkCacheDao().getNetworkCacheDataById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
