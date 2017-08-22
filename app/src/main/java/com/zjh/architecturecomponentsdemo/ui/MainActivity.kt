@@ -1,8 +1,6 @@
 package com.zjh.architecturecomponentsdemo.ui
 
-import android.arch.lifecycle.LifecycleActivity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -23,7 +21,6 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
     private lateinit var mImageViewModel:ImageViewModel
     private lateinit var mAdapter: BaseQuickAdapter<ImageBean,BaseViewHolder>
     private val mParam: PagingParam = PagingParam.createParam()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,7 +58,6 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
                 if (it.size < mParam.pageSize){
                     mAdapter.loadMoreEnd()
                 }
-                mAdapter.loadMoreComplete()
             }else{
                 mAdapter.loadMoreFail()
             }
