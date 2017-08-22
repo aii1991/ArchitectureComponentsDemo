@@ -20,7 +20,7 @@ abstract class AppDatabase : RoomDatabase(){
     abstract fun networkCacheDao(): NetworkCacheDao
 
     companion object {
-        private const val DB_NAME = "bc_im.appDatabase"
+        private const val DB_NAME = "db.appDatabase"
 
         fun createInMemoryDatabase(context: Context): AppDatabase
                 = Room.inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java).build()

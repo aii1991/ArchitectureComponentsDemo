@@ -29,12 +29,12 @@ class ImageRepository : IRepository<ImageBean>{
         if (NetworkUtils.isNetworkConnected()){
             compositeDisposable.add(
                     ImageWebService.getImages(param,Consumer {
-                        compositeDisposable.add(NetworkCacheService.insertData(NetworkCacheEntity(ReqUrl.IMAGE_REQ_URL,param.toString(),mGson.toJson(it))))
+                        compositeDisposable.add(NetworkCacheService.insertData(NetworkCacheEntity(ReqUrl.IMAGE_REQ_URL,param.toString(),mGson.toJson(it)))) //持久化数据
                         onSuccess.accept(it)
                     }, onError,onComplete)
             )
         }else{
-            compositeDisposable.add(NetworkCacheService.getData(NetworkCacheEntity.getId(ReqUrl.IMAGE_REQ_URL,param.toString()),onSuccess,onError))
+            compositeDisposable.add(NetworkCacheService.getData(NetworkCacheEntity.getId(ReqUrl.IMAGE_REQ_URL,param.toString()),onSuccess,onError)) //唔网络,从数据库取
         }
     }
 
@@ -53,7 +53,4 @@ class ImageRepository : IRepository<ImageBean>{
     override fun destroy() {
         compositeDisposable.clear()
     }
-
-
-
 }

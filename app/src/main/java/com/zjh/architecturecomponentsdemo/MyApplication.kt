@@ -26,13 +26,4 @@ class MyApplication : Application(){
         appDatabase = AppDatabase.createPersistentDatabase(this)
     }
 
-    fun getAppDataBase(): AppDatabase{
-        return appDatabase
-    }
-
-    fun getApplication(): MyApplication{
-        return instance
-    }
-
-
 }

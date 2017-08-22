@@ -48,7 +48,7 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
 
         mImageViewModel = ViewModelProviders.of(this).get(ImageViewModel::class.java)
         mImageViewModel.mImageBeanListLiveData.value = mAdapter.data
-        mImageViewModel.mImageBeanListLiveData.observe(this, Observer {
+        mImageViewModel.mImageBeanListLiveData.observe(this, Observer { //监听livedata
             if (mSwipeRefreshLayout.isRefreshing){
                 mSwipeRefreshLayout.isRefreshing = false
             }
