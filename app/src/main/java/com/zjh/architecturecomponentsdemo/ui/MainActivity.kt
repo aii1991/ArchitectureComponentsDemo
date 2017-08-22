@@ -1,6 +1,7 @@
 package com.zjh.architecturecomponentsdemo.ui
 
 import android.arch.lifecycle.*
+import android.arch.persistence.room.EmptyResultSetException
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -13,7 +14,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.zjh.architecturecomponentsdemo.R
 import com.zjh.architecturecomponentsdemo.data.bean.ImageBean
 import com.zjh.architecturecomponentsdemo.data.remotedata.req.PagingParam
-import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -58,6 +58,7 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
                 if (it.size < mParam.pageSize){
                     mAdapter.loadMoreEnd()
                 }
+                mAdapter.loadMoreComplete()
             }else{
                 mAdapter.loadMoreFail()
             }
@@ -73,10 +74,13 @@ class MainActivity : LifecycleActivity(), BaseQuickAdapter.RequestLoadMoreListen
     override fun onLoadMoreRequested() {
         mParam.currentPage ++
         mImageViewModel.loadData(mParam, Consumer {
-            mParam.currentPage --
-            mAdapter.loadMoreFail()
-        },Action {
-            mAdapter.loadMoreComplete()
+            if (it is EmptyResultSetException){
+                mAdapter.loadMoreComplete()
+                mAdapter.loadMoreEnd()
+            }else{
+                mParam.currentPage --
+                mAdapter.loadMoreFail()
+            }
         })
     }
 

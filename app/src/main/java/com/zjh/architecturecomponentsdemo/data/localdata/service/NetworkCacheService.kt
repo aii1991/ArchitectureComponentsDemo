@@ -1,5 +1,6 @@
 package com.zjh.architecturecomponentsdemo.data.localdata.service
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.zjh.architecturecomponentsdemo.MyApplication
@@ -34,7 +35,7 @@ object NetworkCacheService {
                      val resp: List<ImageBean> = mGson.fromJson(it.resp, object :TypeToken<List<ImageBean>>(){}.type)
                      resp
                  }
-                .subscribe(onSuccess,onError)
+                 .subscribe(onSuccess,onError)
     }
 
 

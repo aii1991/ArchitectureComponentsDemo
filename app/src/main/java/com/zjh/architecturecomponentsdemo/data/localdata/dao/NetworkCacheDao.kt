@@ -12,6 +12,10 @@ import io.reactivex.Single
  */
 @Dao
 interface NetworkCacheDao {
+    /**
+     *  If a Single<T> query returns null, Room will throw EmptyResultSetException.
+     *  @see <https://developer.android.com/reference/android/arch/persistence/room/Query.html</a>
+     */
     @Query("SELECT * FROM t_network_cache where id = :id")
     fun getNetworkCacheDataById(id:Int): Single<NetworkCacheEntity>
 
